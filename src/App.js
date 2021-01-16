@@ -3,28 +3,45 @@ import List from './List'
 import Alert from './Alert'
 
 function App() {
-  const [item, setItem] = useState();
-  const [listItems, setListItems] = useState([]);
-
-
-  const handleChange = (itemChange) => {
-    setItem(itemChange);
-    console.log(item);
-  }
+  const [name, setName] = useState('');
+  const [ list, stList] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editID, setEditID] = useState(null);
+  const [alert, setAlert] = useState({ show: false, msg: "", type: ""});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setListItems(item);
-    setItem('');
-    console.log(itemDefined);
+    if (!name) {
+      //display alert
+    } else if (name && isEditing) {
+      // deal with edit
+    } else {
+      // show alert
+    }
   }
 
   return (
-    <section>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={item} onChange={(e) => handleChange(e.target.value)} />
-        <button className="btn">Add</button>
+    <section className="section-center">
+      <form className="grocery-form" onSubmit={handleSubmit}>
+        {alert.show && <Alert />}
+        <h3>Grocery Bud</h3>
+        <div className="form-control">
+          <input 
+            type="text" 
+            className="grocery" 
+            placeholder="e.g. Chicken" 
+            value={name} 
+            onChange={(e) => setName(e.target.name)}
+          />
+          <button type="submit" className="submit-btn">
+            {isEditing? 'edit': 'submit'}
+          </button>
+        </div>
       </form>
+      <div className="grocery-container">
+        <List />
+        <button className="clear-btn">Clear Items</button>
+      </div>
     </section>
   )
 }
